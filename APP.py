@@ -4,21 +4,18 @@ import numpy as np
 import pandas as pd
 import shap
 import matplotlib.pyplot as plt
-
-# 加载保存的随机森林模型
 import os
-import joblib
 
-# 获取当前脚本所在目录，拼接成绝对路径
+# 加载保存的随机
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-model = joblib.load(os.path.join(BASE_DIR, 'RF.pkl'))
+model = joblib.load(os.path.join(BASE_DIR, 'rf.pkl'))
 
-# 特征范围定义（根据提供的特征范围和数据类型）
+# 特征范围定义
 feature_ranges = {
     "WBC_Onset": {"type": "numerical", "min": 0.000, "max": 100.000, "default": 10.0},
     "Onset_CGA": {"type": "numerical", "min": 10.000, "max": 50.000, "default": 24.555},
     "PLT_Onset": {"type": "numerical", "min": 0.0, "max": 1000.0, "default": 200.0},
-    "GA": {"type": "numerical", "min": 20, "max":45, "default": 35},
+    "GA": {"type": "numerical", "min": 20, "max": 45, "default": 35},
     "HCT_Onset": {"type": "numerical", "min": 20, "max": 80, "default": 40},
 }
 
@@ -55,7 +52,7 @@ if st.button("Predict"):
     # 提取预测的类别概率
     probability = predicted_proba[predicted_class] * 100
 
-    # 显示预测结果，使用 Matplotlib 渲染指定字体
+    # 显示预测结果
     text = f"Based on feature values, predicted possibility of sNEC is {probability:.2f}%"
     fig, ax = plt.subplots(figsize=(8, 1))
     ax.text(
@@ -73,16 +70,15 @@ if st.button("Predict"):
     explainer = shap.TreeExplainer(model)
     shap_values = explainer.shap_values(pd.DataFrame([feature_values], columns=feature_ranges.keys()))
 
-    # 生成 SHAP 力图
-    class_index = predicted_class  # 当前预测类别
+    # 生成 SHAP 力图（红蓝颜色取反）
+    class_index = predicted_class
     shap_fig = shap.force_plot(
-        explainer.expected_value[class_index],
-        shap_values[:,:,class_index],
+        -explainer.expected_value[class_index],
+        -shap_values[:, :, class_index],
         pd.DataFrame([feature_values], columns=feature_ranges.keys()),
         matplotlib=True,
     )
+
     # 保存并显示 SHAP 图
     plt.savefig("shap_force_plot.png", bbox_inches='tight', dpi=1200)
     st.image("shap_force_plot.png")
-
-
