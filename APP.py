@@ -51,7 +51,7 @@ if st.button("Predict"):
     probability = predicted_proba[predicted_class] * 100
 
     # 显示预测结果，使用 Matplotlib 渲染指定字体
-    text = f"Based on feature values, predicted possibility of AKI is {probability:.2f}%"
+    text = f"Based on feature values, predicted possibility of mNEC is {probability:.2f}%"
     fig, ax = plt.subplots(figsize=(8, 1))
     ax.text(
         0.5, 0.5, text,
@@ -79,3 +79,4 @@ if st.button("Predict"):
     # 保存并显示 SHAP 图
     plt.savefig("shap_force_plot.png", bbox_inches='tight', dpi=1200)
     st.image("shap_force_plot.png")
+
