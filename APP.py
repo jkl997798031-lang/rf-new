@@ -46,10 +46,9 @@ features = np.array([feature_values])
 # 预测与 SHAP 可视化
 if st.button("Predict"):
     # 模型预测
-    predicted_class = model.predict(features)[0]
     predicted_proba = model.predict_proba(features)[0]
 
-    # 始终显示类别1（患病）的概率
+    # 始终显示类别1（sNEC）的概率
     probability = predicted_proba[1] * 100
 
     # 显示预测结果
@@ -70,8 +69,8 @@ if st.button("Predict"):
     explainer = shap.TreeExplainer(model)
     shap_values = explainer.shap_values(pd.DataFrame([feature_values], columns=feature_ranges.keys()))
 
-    # 生成 SHAP 力图（红蓝颜色取反）
-    class_index = predicted_class
+    # 生成 SHAP 力图，固定解释类别1（sNEC）
+    class_index = 1
     shap_fig = shap.force_plot(
         -explainer.expected_value[class_index],
         -shap_values[:, :, class_index],
