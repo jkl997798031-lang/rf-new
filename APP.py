@@ -18,7 +18,7 @@ feature_ranges = {
     "WBC_Onset": {"type": "numerical", "min": 0.000, "max": 100.000, "default": 10.0},
     "Onset_CGA": {"type": "numerical", "min": 10.000, "max": 50.000, "default": 24.555},
     "PLT_Onset": {"type": "numerical", "min": 0.0, "max": 1000.0, "default": 200.0},
-    "GA": {"type": "numerical", "min": 0, "max":5, "default": 2.5},
+    "GA": {"type": "numerical", "min": 20, "max":45, "default": 35},
     "HCT_Onset": {"type": "numerical", "min": 20, "max": 80, "default": 40},
 }
 
@@ -56,7 +56,7 @@ if st.button("Predict"):
     probability = predicted_proba[predicted_class] * 100
 
     # 显示预测结果，使用 Matplotlib 渲染指定字体
-    text = f"Based on feature values, predicted possibility of AKI is {probability:.2f}%"
+    text = f"Based on feature values, predicted possibility of sNEC is {probability:.2f}%"
     fig, ax = plt.subplots(figsize=(8, 1))
     ax.text(
         0.5, 0.5, text,
@@ -84,4 +84,5 @@ if st.button("Predict"):
     # 保存并显示 SHAP 图
     plt.savefig("shap_force_plot.png", bbox_inches='tight', dpi=1200)
     st.image("shap_force_plot.png")
+
 
