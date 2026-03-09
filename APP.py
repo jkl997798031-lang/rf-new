@@ -1,4 +1,3 @@
-python
 import streamlit as st
 import joblib
 import numpy as np
@@ -83,3 +82,4 @@ if st.button("Predict"):
     # 保存并显示 SHAP 图
     plt.savefig("shap_force_plot.png", bbox_inches='tight', dpi=1200)
     st.image("shap_force_plot.png")
+
