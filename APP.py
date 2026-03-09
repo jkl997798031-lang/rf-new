@@ -49,8 +49,8 @@ if st.button("Predict"):
     predicted_class = model.predict(features)[0]
     predicted_proba = model.predict_proba(features)[0]
 
-    # 提取预测的类别概率
-    probability = predicted_proba[predicted_class] * 100
+    # 始终显示类别1（患病）的概率
+    probability = predicted_proba[1] * 100
 
     # 显示预测结果
     text = f"Based on feature values, predicted possibility of sNEC is {probability:.2f}%"
@@ -82,4 +82,3 @@ if st.button("Predict"):
     # 保存并显示 SHAP 图
     plt.savefig("shap_force_plot.png", bbox_inches='tight', dpi=1200)
     st.image("shap_force_plot.png")
-
