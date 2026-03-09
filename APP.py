@@ -1,3 +1,4 @@
+python
 import streamlit as st
 import joblib
 import numpy as np
@@ -6,9 +7,9 @@ import shap
 import matplotlib.pyplot as plt
 import os
 
-# 加载保存的随机
+# 加载保存的随机森林模型
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-model = joblib.load(os.path.join(BASE_DI, 'RF.pkl'))
+model = joblib.load(os.path.join(BASE_DIR, 'RF.pkl'))
 
 # 特征范围定义
 feature_ranges = {
@@ -82,5 +83,3 @@ if st.button("Predict"):
     # 保存并显示 SHAP 图
     plt.savefig("shap_force_plot.png", bbox_inches='tight', dpi=1200)
     st.image("shap_force_plot.png")
-
-
